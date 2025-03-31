@@ -74,27 +74,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Delete Artifact
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.actions.deleteArtifact({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              artifact_id: ${{ steps.artifact-upload.outputs.artifact-id }}
-            });
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload dist folder
-          path: './dist'
-
-
       - name: Upload artifact for Prod
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
+          overwrite: true
 
       - name: Deploy to Prod
         uses: JamesIves/github-pages-deploy-action@v4
