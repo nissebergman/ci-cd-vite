@@ -43,6 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
+          name: 'dev'
 
       - name: Deploy to Dev
         uses: JamesIves/github-pages-deploy-action@v4
@@ -78,7 +79,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
-          overwrite: true
+          name: 'prod'
 
       - name: Deploy to Prod
         uses: JamesIves/github-pages-deploy-action@v4
