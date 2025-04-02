@@ -1,88 +1,88 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# # Simple workflow for deploying static content to GitHub Pages
+# name: Deploy static content to Pages
 
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: ['main']
+#   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+# permissions:
+#   contents: write
+#   pages: write
+#   id-token: write
 
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+# concurrency:
+#   group: 'pages'
+#   cancel-in-progress: true
 
-jobs:
-  deploy-dev:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+# jobs:
+#   deploy-dev:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+#       - name: Set up Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
 
-      - name: Build for Dev
-        run: |
-          sed -i "s|base: '/prod/'|base: '/dev/'|" vite.config.js
-          npm run build
+#       - name: Build for Dev
+#         run: |
+#           sed -i "s|base: '/prod/'|base: '/dev/'|" vite.config.js
+#           npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v4
 
-      - name: Upload artifact for Dev
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-          name: 'dev'
+#       - name: Upload artifact for Dev
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           path: './dist'
+#           name: 'dev'
 
-      - name: Deploy to Dev
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          target-folder: "dev"
+#       - name: Deploy to Dev
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           folder: dist
+#           target-folder: "dev"
 
-  deploy-prod:
-    needs: deploy-dev
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#   deploy-prod:
+#     needs: deploy-dev
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+#       - name: Set up Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
 
-      - name: Build for Prod
-        run: |
-          sed -i "s|base: '/ci-cd-vite/dev'|base: '/ci-cd-vite/prod'|" vite.config.js
-          npm run build
+#       - name: Build for Prod
+#         run: |
+#           sed -i "s|base: '/ci-cd-vite/dev'|base: '/ci-cd-vite/prod'|" vite.config.js
+#           npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v4
 
-      - name: Upload artifact for Prod
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-          name: 'prod'
+#       - name: Upload artifact for Prod
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           path: './dist'
+#           name: 'prod'
 
-      - name: Deploy to Prod
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          target-folder: "prod"
+#       - name: Deploy to Prod
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           folder: dist
+#           target-folder: "prod"
