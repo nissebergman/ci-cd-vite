@@ -27,4 +27,4 @@ jobs:
             GH_TOKEN: ${{ github.token }}
         run: |
           gh pr create --base staging --head feature/dev --title "Auto PR: Dev → Staging" --body "This PR was automatically created."
-          gh pr merge --merge --squash
+          gh pr merge --merge
