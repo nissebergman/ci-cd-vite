@@ -1,0 +1,68 @@
+name: Build and Test Lab-CI/CD
+
+on:
+  # Automatically run this pipeline on every push to the main branch
+  push:
+    branches:
+      - main
+  # Allow running this pipeline manually from GitHub's website
+  workflow_dispatch:
+
+env:
+    VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+
+jobs:
+  test:
+    # Run on an Ubuntu 22.04 VM image
+    runs-on: ubuntu-22.04
+    name: Test CI/CD Lab
+    steps:
+      # Checkout our repository
+      - uses: actions/checkout@v4
+
+      # Install NPM dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Run unit tests
+      - name: Run unit tests
+        run: npm run test
+
+  build:
+    needs: test
+    # Run on an Ubuntu 22.04 VM image
+    runs-on: ubuntu-22.04
+    permissions:
+      packages: write
+      contents: read
+    name: Build CI/CD Lab
+    env:
+      GITHUB_USER: nissebergman
+      IMAGE_REGISTRY: ghcr.io/nissebergman
+    steps:
+      # Checkout our repository
+      - uses: actions/checkout@v4
+  
+      # Setup Docker with BuildKit (faster builds and cache support)
+      - uses: docker/setup-buildx-action@v3
+  
+      # Login to our container registry
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: "${{ env.IMAGE_REGISTRY }}"
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+  
+      # Set environment variables
+      - name: Set environment variables
+        run: |
+          # Use a short SHA as version
+          echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+  
+      # Build and push our container image
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: "${{ env.IMAGE_REGISTRY }}/lab-cicd:${{ env.SHA_SHORT }},${{ env.IMAGE_REGISTRY }}/lab-cicd:latest"
