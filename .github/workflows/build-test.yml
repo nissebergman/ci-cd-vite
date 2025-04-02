@@ -23,5 +23,7 @@ jobs:
         run: npm run test
 
       - name: Create Pull Request
+        env:
+            GH_TOKEN: ${{ github.token }}
         run: |
           gh pr create --base staging --head feature/dev --title "Auto PR: Dev → Staging" --body "This PR was automatically created."
