@@ -22,20 +22,6 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - name: Create Pull Request to Staging
-        if: success()  # Only if tests pass
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: feature/dev
-          base: staging
-          title: "Automated PR: Dev → Staging"
-          body: "This PR was automatically created and will be merged if tests pass."
-          labels: "automated, staging"
-          draft: false
-
-      - name: Auto Merge PR
-        if: success()
-        uses: pascalgn/automerge-action@v0.15.3
-        with:
-          merge_method: squash
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Pull Request
+        run: |
+          gh pr create --base staging --head feature/dev --title "Auto PR: Dev → Staging" --body "This PR was automatically created."
