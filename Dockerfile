@@ -3,9 +3,8 @@ FROM node:current-alpine as build
 # We will use this as our home directory.
 WORKDIR /app
 
-
 # Copy npm dependency files.
-COPY package.json package-lock.json index.html ./
+COPY package.json package-lock.json ./
 
 # Install our npm dependencies.
 RUN npm ci
@@ -25,4 +24,4 @@ FROM nginx:mainline-alpine
 EXPOSE 80
 
 # Copy the static files from our earlier build into the nginx image.
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
