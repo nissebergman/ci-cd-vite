@@ -1,0 +1,23 @@
+features:
+- buildpack-stack=ubuntu-22
+ingress:
+  rules:
+  - component:
+      name: nissebergman-ci-cd-vite
+    match:
+      path:
+        prefix: /
+name: ci-cd-vite
+region: ams
+services:
+- health_check:
+    http_path: /
+  http_port: 80
+  image:
+    registry: nissebergman
+    registry_type: GHCR
+    repository: ci-cd-vite
+    tag: latest
+  instance_count: 1
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  name: nissebergman-ci-cd-vite
