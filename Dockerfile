@@ -3,8 +3,8 @@ FROM node:current-alpine as build
 # We will use this as our home directory.
 WORKDIR /app
 
-ARG VITE_API_BASE_URL
-ENV VITE_API_BASE_URL="DOCKER"
+ARG VITE_API_BASE_URL=${VITE_API_BASE_URL}
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Copy npm dependency files.
 COPY package.json package-lock.json index.html ./
