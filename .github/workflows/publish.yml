@@ -66,4 +66,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: "${{ env.IMAGE_REGISTRY }}/lab-cicd:${{ env.SHA_SHORT }},${{ env.IMAGE_REGISTRY }}/lab-cicd:latest"
+          tags: "${{ env.IMAGE_REGISTRY }}/ci-cd-vite:${{ env.SHA_SHORT }},${{ env.IMAGE_REGISTRY }}/ci-cd-vite:latest"
