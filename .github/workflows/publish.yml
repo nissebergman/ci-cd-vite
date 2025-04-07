@@ -31,13 +31,12 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+      GITHUB_USER: nissebergman
+      IMAGE_REGISTRY: ghcr.io/nissebergman
     permissions:
       packages: write
       contents: read
     name: Build CI/CD Lab
-    env:
-      GITHUB_USER: nissebergman
-      IMAGE_REGISTRY: ghcr.io/nissebergman
     steps:
       # Checkout our repository
       - uses: actions/checkout@v4
