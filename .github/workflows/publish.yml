@@ -35,7 +35,7 @@ jobs:
       IMAGE_REGISTRY: ghcr.io/nissebergman
     permissions:
       packages: write
-      contents: read
+      contents: write
     name: Build CI/CD Lab
     steps:
       # Checkout our repository
