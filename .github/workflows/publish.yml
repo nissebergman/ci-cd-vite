@@ -8,9 +8,6 @@ on:
   # Allow running this pipeline manually from GitHub's website
   workflow_dispatch:
 
-env:
-    VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-
 jobs:
   test:
     # Run on an Ubuntu 22.04 VM image
@@ -32,6 +29,8 @@ jobs:
     needs: test
     # Run on an Ubuntu 22.04 VM image
     runs-on: ubuntu-22.04
+    env:
+      VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
     permissions:
       packages: write
       contents: read
@@ -45,6 +44,9 @@ jobs:
   
       # Setup Docker with BuildKit (faster builds and cache support)
       - uses: docker/setup-buildx-action@v3
+        with:
+          build-args: |
+            VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
   
       # Login to our container registry
       - name: Login to registry
