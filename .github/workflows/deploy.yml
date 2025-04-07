@@ -20,4 +20,3 @@ jobs:
       - uses: digitalocean/app_action/deploy@v2
         with:
           token: ${{ secrets.DO_DEPLOY_SECRET }}
-          
