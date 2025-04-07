@@ -4,7 +4,7 @@ FROM node:current-alpine as build
 WORKDIR /app
 
 ARG VITE_API_BASE_URL
-ENV VITE_API_BASE_URL="LOCAL"
+ENV VITE_API_BASE_URL="DOCKER"
 
 # Copy npm dependency files.
 COPY package.json package-lock.json index.html ./
